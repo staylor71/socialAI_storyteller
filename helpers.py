@@ -7,7 +7,7 @@ from openai import OpenAI
 PATH = "project/socialAI_storyteller/"
 
 # Get API key and client
-with open(PATH + "key.json", 'r') as file:
+with open("key.json", 'r') as file:
     data = json.load(file)
     client = OpenAI(api_key=data["api_key"])
 

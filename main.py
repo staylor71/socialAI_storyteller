@@ -16,9 +16,9 @@ def main():
     tts.stop()
 
 
-    prompt = input("What do you want a story about?")
+    # prompt = input("What do you want a story about?")
     
-    # prompt = "tell me a story" #TODO: switch this back once we've debugged
+    prompt = "tell me a story" #TODO: switch this back once we've debugged
 
     # TODO: if input is ambiguous let gpt make its own prompt
 
@@ -32,10 +32,21 @@ def main():
     ]
 
     # Generate a response
-    response = magic_box(prev_conversation, tokens=1200)
+    story = magic_box(prev_conversation, tokens=1200)
 
+    if type(story) == str:
+        title_start = story.find("**")+2
+        title_end = story[title_start:].find("**")
+        title = story[title_start:title_end]
+
+        pages = story.split('\n\n')
+    else:
+        title = ""
+        pages = []
+
+    return (title, pages)
     # Print out story section by section
-    read_story(response, prev_conversation)
+    # read_story(response, prev_conversation)
     
 
     
