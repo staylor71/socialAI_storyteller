@@ -7,15 +7,41 @@ Retrieved 2025-11-22, License - CC BY-SA 4.0
 <!doctype html>
 
 
+
 <head><title>Home Page</title> 
-    <meta charset=utf-8> </head>
+    <meta charset=utf-8> 
+    <!-- <link rel="stylesheet" href="mystyle.css"> -->
+    <style type="text/css">
+  body {
+    padding-left: 2em;
+    font-family: Georgia, "Times New Roman",
+          Times, serif;
+    color: rgb(79, 6, 79);
+    background-color: #f3d66d }
+  ul.navbar {
+    position: absolute;
+    top: 2em;
+    right: 1em; 
+    width: 10em; }
+    </style>
+</head>
+
+<!-- body stary -->
     <body>
+
+        <!-- Site navigation menu -->
+        <ul class="navbar">
+            <a href="settings.html">⚙Settings⚙</a>
+            <a href="links.html">🔗Links🔗</a>
+        </ul>
+
         <h1>Storyteller</h1>
 
         <b>
             Hello! <br> Would you like me to tell you a story?
         </b>
 
+        <!-- GENERATE STORY -->
         <form action="/tell-story/">
             <input type="submit" value="Tell me a story" />
         </form>
