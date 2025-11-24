@@ -23,7 +23,7 @@ def my_link():
         outline = file.read()
 
     new_page = outline.replace('[title]', title)
-    new_page = new_page.replace('[story]', story[1])
+    new_page = new_page.replace('[text]', story[1])
 
     with open('templates/story.html', 'w+') as file:
         file.truncate(0)

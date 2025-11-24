@@ -40,13 +40,18 @@ def main():
 
     if type(story) == str:
         title_start = story.find("**")+2
-        title_end = story[title_start:].find("**")
+        title_end = story[title_start:].find("**")+2
         title = story[title_start:title_end]
+
+        with open("Stories/"+title+".txt", 'w+') as file:
+            file.write(story[title_end:])
 
         pages = story.split('\n\n')
     else:
         title = ""
         pages = []
+
+    
 
     return (title, pages)
     # Print out story section by section
