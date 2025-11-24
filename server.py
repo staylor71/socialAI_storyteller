@@ -13,16 +13,10 @@ def home():
     return render_template('home.html')
 
 @app.route('/tell-story/')
-def my_link():
+async def my_link():
     print ('I got clicked!')
 
     #TODO code
-    title, story = main()
-
-    while(story == None):
-        pass
-
-    make_page(title=title, story=story, page_num=1)
 
     return render_template('story.html')
 
@@ -32,29 +26,8 @@ def my_link():
 def next():
     print ('next page')
 
-    make_page()
 
     return render_template('story.html')
-
-
-def make_page(title=def_title, story=def_story, page_num=def_num):
-    def_title = title
-    def_story = story
-    def_num = page_num+1
-
-    page = story[page_num]
-
-    with open('templates/story_template.html', 'w+') as file:
-        base_page = file.read()
-
-    new_text = page
-
-    new_page = base_page.replace("[text]", new_text)
-    new_page = new_page.replace("[title]", title)
-
-    with open('templates/story.html', 'w+') as file:
-        file.truncate(0)
-        file.write(new_page)
 
 
 

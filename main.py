@@ -31,8 +31,12 @@ def main():
         {"role" : "user", "content" : clarified_prompt}
     ]
 
+    print("awaiting story!")
+
     # Generate a response
     story = magic_box(prev_conversation, tokens=1200)
+
+    print("story made!")
 
     if type(story) == str:
         title_start = story.find("**")+2
@@ -53,5 +57,3 @@ def main():
 
 
 
-if __name__ == '__main__':
-    main()
