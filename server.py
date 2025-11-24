@@ -13,10 +13,21 @@ def home():
     return render_template('home.html')
 
 @app.route('/tell-story/')
-async def my_link():
-    print ('I got clicked!')
+def my_link():
+    print ('[INFO] Listening...')
 
-    #TODO code
+    #TODO add audio listener
+    title, story = main()
+
+    with open('templates/story_template.html', 'r+') as file:
+        outline = file.read()
+
+    new_page = outline.replace('[title]', title)
+    new_page = new_page.replace('[story]', story[1])
+
+    with open('templates/story.html', 'w+') as file:
+        file.truncate(0)
+        file.write(new_page)
 
     return render_template('story.html')
 

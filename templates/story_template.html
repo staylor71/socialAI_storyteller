@@ -1,17 +1,43 @@
 <!doctype html>
+<!-- this is meant to be a template for story """pages""" -->
 
 
-<head><title>Test</title> 
-    <meta charset=utf-8> </head>
+<head><title>Story</title> 
+    <meta charset=utf-8> 
+    <style type="text/css">
+  body {
+    padding-left: 2em;
+    font-family: Georgia, "Times New Roman",
+          Times, serif;
+    color: rgb(79, 6, 79);
+    background-color: #f3d66d }
+  ul.navbar {
+    position: absolute;
+    top: 2em;
+    right: 1em; 
+    width: 10em; }
+    </style>
+</head>
+</head>
     <body>
+
+        <!-- Site navigation menu -->
+        <ul class="navbar">
+            <a href="settings.html">⚙Settings⚙</a>
+            <a href="links.html">🔗Links🔗</a>
+        </ul>
+
         <h1>Storyteller</h1>
+        <h2>[title]</h2>
 
         <b>
             [text]
         </b>
 
         <form action="/next/">
-            <input type="submit" value="Click me" />
+            <input type="submit" value="Prev" />
+            <input type="submit" value="Talk" />
+            <input type="submit" value="Next" />
         </form>
         
 

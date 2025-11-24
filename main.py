@@ -11,9 +11,9 @@ def main():
     # Ask for story topic
 
     # TODO say this with tts
-    tts.say("What do you want a story about?")
-    tts.runAndWait()
-    tts.stop()
+    # tts.say("What do you want a story about?")
+    # tts.runAndWait()
+    # tts.stop()
 
 
     # prompt = input("What do you want a story about?")

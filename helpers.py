@@ -97,7 +97,7 @@ def read_story(story, convo):
 def generate_prompt(user_input):
 
     # Grab parental settings
-    with open(PATH + "parental_controls.json", 'r') as file:
+    with open("parental_controls.json", 'r') as file:
         data = json.load(file)
         topics_to_avoid = data['topics_to_avoid']
         rating = data["rating"]
@@ -116,7 +116,7 @@ def generate_prompt(user_input):
 def interrupt_prompt(user_input):
 
     # Grab parental settings
-    with open(PATH + "parental_controls.json", 'r') as file:
+    with open("parental_controls.json", 'r') as file:
         data = json.load(file)
         topics_to_avoid = data['topics_to_avoid']
         rating = data["rating"]
