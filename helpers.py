@@ -20,6 +20,48 @@ with open("key.json", 'r') as file:
 #                                                                 #
 ###################################################################
 
+persona = "You are a friendly, nurturing bedtime storyteller for kids aged 5-8 years."
+
+
+def write_story(prompt):
+
+    # Edit user prompt to be kid friendly and such
+    clarified_prompt = generate_prompt(prompt)
+
+    # Log the current conversation
+    prev_conversation = [
+        {"role" : "system", "content" : persona},
+        {"role" : "user", "content" : clarified_prompt}
+    ]
+
+    print("[INFO] awaiting story!")
+
+    # Generate a response
+    story = magic_box(prev_conversation, tokens=1200)
+
+    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "—")
+
+    print(story)
+
+    print("[INFO] story made!")
+
+    if type(story) == str:
+        title_start = story.find("**")+2
+        title_end = story[title_start:].find("**")+2
+        title = story[title_start:title_end]
+
+        pages = story.split('\n\n')
+    else:
+        title = ""
+        pages = []
+
+    dict = {'title' : title, 'pages' : pages}
+
+    with open('story_json.json', 'w+') as file:
+        file.truncate(0)
+        file.write(json.dumps(dict, indent = 4))
+
+
 def magic_box(convo, temp=0.7, tokens=1200, top=0.9, frequency=0, presence=0):
         
     # Create GPT response
@@ -129,6 +171,13 @@ def interrupt_prompt(user_input):
     full_prompt = f"Continue the previous {rating}-rated kids bedtime story, but {user_input}. Avoid {topics_to_avoid}."
 
     return (full_prompt)
+
+
+###################################################################
+#                                                                 #
+#                           HTML EDITING                          #
+#                                                                 #
+###################################################################
 
 
 def edit_story_html(page_num):

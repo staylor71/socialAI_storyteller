@@ -1,6 +1,5 @@
 from flask import Flask, render_template
-from main import main
-from helpers import edit_story_html
+from helpers import edit_story_html, write_story
 app = Flask(__name__)
 
 
@@ -18,7 +17,10 @@ def my_link():
     print ('[INFO] Listening...')
 
     #TODO add audio listener
-    title, story = main()
+    prompt = "Tell me a story"
+
+    write_story(prompt)
+
     PAGE_NUM = 1
 
     edit_story_html(PAGE_NUM)
