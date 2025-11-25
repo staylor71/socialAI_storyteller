@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from helpers import edit_story_html, write_story
+from helpers import edit_story_html, write_story, interrupt_story
 app = Flask(__name__)
 
 
@@ -11,7 +11,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/tell-story/')
-def my_link():
+def tell_story():
     global PAGE_NUM
 
     print ('[INFO] Listening...')
@@ -52,7 +52,17 @@ def prev():
     return render_template('story.html')
 
 
+@app.route('/talk/')
+def talk():
+    print("[INFO] Editing story")
+    global PAGE_NUM
 
+    #TODO audio input
+    prompt = "Add zilly, the wizard with a perm, into the story"
+
+    interrupt_story(prompt, PAGE_NUM)
+
+    return next()
 
 
 

@@ -36,14 +36,18 @@ def write_story(prompt):
 
     print("[INFO] awaiting story!")
 
+    save_story(prev_conversation)
+
+
+def save_story(convo, prev_story=[]):
     # Generate a response
-    story = magic_box(prev_conversation, tokens=1200)
+    story = magic_box(convo, tokens=1200)
 
     story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "—")
 
-    print(story)
-
     print("[INFO] story made!")
+
+    print(story)
 
     if type(story) == str:
         title_start = story.find("**")+2
@@ -52,14 +56,41 @@ def write_story(prompt):
 
         pages = story.split('\n\n')
     else:
+        print("'\033[91m'[ERROR] story made improperly'\033[0m'")
         title = ""
         pages = []
 
-    dict = {'title' : title, 'pages' : pages}
+    dict = {
+        'convo' : convo,
+        'title' : title, 
+        'pages' : prev_story + pages,
+        }
 
     with open('story_json.json', 'w+') as file:
         file.truncate(0)
         file.write(json.dumps(dict, indent = 4))
+
+
+def interrupt_story(user_input, page_num):
+    with open('story_json.json', 'r+') as file:
+        data = json.load(file)
+
+    convo = data['convo']
+    pages = data['pages']
+    title = data['title']
+
+    # Edit prompt to adhere to guidelines
+    edited_prompt = interrupt_prompt(user_input)
+    
+    # Set up the conversation so far
+    convo.append({"role" : "assistant", "content" : "**" + title + "**" + "\n\n" + "\n\n".join(pages[:page_num+1])})
+    convo.append({"role" : "user", "content" : edited_prompt})
+
+
+    #TODO make it say this in separate voice
+    print(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
+    
+    save_story(convo, pages[:page_num+1])
 
 
 def magic_box(convo, temp=0.7, tokens=1200, top=0.9, frequency=0, presence=0):
