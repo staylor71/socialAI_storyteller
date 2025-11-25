@@ -1,5 +1,6 @@
 from helpers import magic_box, read_story, generate_prompt
 import pyttsx3
+import json
 tts = pyttsx3.init()
 
 
@@ -31,12 +32,16 @@ def main():
         {"role" : "user", "content" : clarified_prompt}
     ]
 
-    print("awaiting story!")
+    print("[INFO] awaiting story!")
 
     # Generate a response
     story = magic_box(prev_conversation, tokens=1200)
 
-    print("story made!")
+    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"")
+
+    print(story)
+
+    print("[INFO] story made!")
 
     if type(story) == str:
         title_start = story.find("**")+2
@@ -51,7 +56,11 @@ def main():
         title = ""
         pages = []
 
-    
+    dict = {'title' : title, 'pages' : pages}
+
+    with open('Stories/story_json.json', 'w+') as file:
+        file.truncate(0)
+        file.write(json.dumps(dict, indent = 4))
 
     return (title, pages)
     # Print out story section by section

@@ -1,11 +1,10 @@
 from flask import Flask, render_template
 from main import main
+import json
 app = Flask(__name__)
 
 
-def_title = "" 
-def_story = []
-def_num = 1
+PAGE_NUM = 1
 
 
 @app.route('/')
@@ -35,8 +34,26 @@ def my_link():
 
 @app.route('/next/')
 def next():
-    print ('next page')
+    print ('[INFO] next page')
+    global PAGE_NUM
 
+    PAGE_NUM = PAGE_NUM + 1
+
+    with open('templates/story_template.html', 'r+') as file:
+        outline = file.read()
+
+    with open('Stories/story_json.json', 'r+') as file:
+        data = json.load(file)
+
+    title = data['title']
+    story = data['pages']
+
+    new_page = outline.replace('[title]', title)
+    new_page = new_page.replace('[text]', story[PAGE_NUM])
+
+    with open('templates/story.html', 'w+') as file:
+        file.truncate(0)
+        file.write(new_page)
 
     return render_template('story.html')
 
