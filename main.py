@@ -37,7 +37,7 @@ def main():
     # Generate a response
     story = magic_box(prev_conversation, tokens=1200)
 
-    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"")
+    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "—")
 
     print(story)
 
@@ -48,9 +48,6 @@ def main():
         title_end = story[title_start:].find("**")+2
         title = story[title_start:title_end]
 
-        with open("Stories/"+title+".txt", 'w+') as file:
-            file.write(story[title_end:])
-
         pages = story.split('\n\n')
     else:
         title = ""
@@ -58,7 +55,7 @@ def main():
 
     dict = {'title' : title, 'pages' : pages}
 
-    with open('Stories/story_json.json', 'w+') as file:
+    with open('story_json.json', 'w+') as file:
         file.truncate(0)
         file.write(json.dumps(dict, indent = 4))
 

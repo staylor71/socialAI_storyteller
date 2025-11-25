@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from main import main
-import json
+from helpers import edit_story_html
 app = Flask(__name__)
 
 
@@ -13,23 +13,17 @@ def home():
 
 @app.route('/tell-story/')
 def my_link():
+    global PAGE_NUM
+
     print ('[INFO] Listening...')
 
     #TODO add audio listener
     title, story = main()
+    PAGE_NUM = 1
 
-    with open('templates/story_template.html', 'r+') as file:
-        outline = file.read()
-
-    new_page = outline.replace('[title]', title)
-    new_page = new_page.replace('[text]', story[1])
-
-    with open('templates/story.html', 'w+') as file:
-        file.truncate(0)
-        file.write(new_page)
+    edit_story_html(PAGE_NUM)
 
     return render_template('story.html')
-
 
 
 @app.route('/next/')
@@ -39,23 +33,24 @@ def next():
 
     PAGE_NUM = PAGE_NUM + 1
 
-    with open('templates/story_template.html', 'r+') as file:
-        outline = file.read()
-
-    with open('Stories/story_json.json', 'r+') as file:
-        data = json.load(file)
-
-    title = data['title']
-    story = data['pages']
-
-    new_page = outline.replace('[title]', title)
-    new_page = new_page.replace('[text]', story[PAGE_NUM])
-
-    with open('templates/story.html', 'w+') as file:
-        file.truncate(0)
-        file.write(new_page)
+    edit_story_html(PAGE_NUM)
 
     return render_template('story.html')
+
+
+@app.route('/prev/')
+def prev():
+    print ('[INFO] prev page')
+    global PAGE_NUM
+
+    PAGE_NUM = PAGE_NUM - 1
+
+    edit_story_html(PAGE_NUM)
+
+    return render_template('story.html')
+
+
+
 
 
 

@@ -12,6 +12,8 @@ with open("key.json", 'r') as file:
     client = OpenAI(api_key=data["api_key"])
 
 
+
+
 ###################################################################
 #                                                                 #
 #                          AI INTERACTION                         #
@@ -127,3 +129,21 @@ def interrupt_prompt(user_input):
     full_prompt = f"Continue the previous {rating}-rated kids bedtime story, but {user_input}. Avoid {topics_to_avoid}."
 
     return (full_prompt)
+
+
+def edit_story_html(page_num):
+    with open('templates/story_template.html', 'r+') as file:
+        outline = file.read()
+
+    with open('story_json.json', 'r+') as file:
+        data = json.load(file)
+
+    title = data['title']
+    story = data['pages']
+
+    new_page = outline.replace('[title]', title)
+    new_page = new_page.replace('[text]', story[page_num])
+
+    with open('templates/story.html', 'w+') as file:
+        file.truncate(0)
+        file.write(new_page)
