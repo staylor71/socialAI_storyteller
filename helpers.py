@@ -43,7 +43,7 @@ def save_story(convo, prev_story=[]):
     # Generate a response
     story = magic_box(convo, tokens=1200)
 
-    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "—")
+    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "-")
 
     print("[INFO] story made!")
 
