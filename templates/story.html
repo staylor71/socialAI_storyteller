@@ -5,17 +5,51 @@
 <head><title>Story</title> 
     <meta charset=utf-8> 
     <style type="text/css">
-  body {
-    padding-left: 2em;
-    font-family: Georgia, "Times New Roman",
-          Times, serif;
-    color: rgb(79, 6, 79);
-    background-color: #67bed9 }
-  ul.navbar {
-    position: absolute;
-    top: 2em;
-    right: 1em; 
-    width: 10em; }
+    body {
+        font-size: 2em;
+        padding-left: 5em;
+        padding-right: 5em;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(79, 6, 79);
+        background-color: #67bed9 
+    }
+    ul.navbar {
+        font-size: 16px;
+        position: absolute;
+        top: 2em;
+        right: 1em; 
+        width: 10em; 
+    }
+    .button {
+        background-color: #04AA6D;
+        border-width: 2px;
+        border-color: white;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+    }
+    .next {
+        position: absolute;
+        bottom: 2em;
+        right: 1em;
+    }
+    .prev {
+        position: absolute;
+        bottom: 2em;
+        left: 1em;
+    }
+    .talk {
+        position: absolute;
+        text-align: center;
+        bottom: 2em;
+    }
     </style>
 </head>
 </head>
@@ -28,22 +62,25 @@
         </ul>
 
         <h1>Storyteller</h1>
-        <h2></h2>
+        <h2>Luna and the Magical Paintbrush</h2>
 
         <b>
-            Out of the shimmering light appeared a figure with a bright smile and a fluffy, colorful perm. It was Zilly, the wizard! Zilly wore a robe that sparkled like the night sky and a tall, pointy hat that seemed to have a mind of its own. "Hello, Luna!" he said with a cheerful wave. "I've been watching you!"
+            Luna was so excited! She thought it might be a magical paintbrush. "I can't wait to try it out!" she said, her eyes sparkling with joy. She ran back to her tree and dipped the brush into her favorite colors—sunny yellow, sky blue, and grass green.
         </b>
 
+        
         <form action="/next/">
-            <input type="submit" value="Next" />
+            <input type="submit" class="button next" value="Next" />
         </form>
+        
 
         <form action="/talk/">
-            <input type="submit" value="Talk" />
+            <input type="submit" class="button talk" value="Talk" />
         </form>
 
+        
         <form action="/prev/">
-            <input type="submit" value="Prev" />
+            <input type="submit" class="button prev" value="Prev" />
         </form>
         
 

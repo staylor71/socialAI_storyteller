@@ -221,6 +221,14 @@ def edit_story_html(page_num):
     title = data['title']
     story = data['pages']
 
+    if page_num < len(story)-1:
+        outline = outline.replace("<!--next", "")
+        outline = outline.replace("next-->", "")
+
+    if page_num > 1:
+        outline = outline.replace("<!--prev", "")
+        outline = outline.replace("prev-->", "")
+
     new_page = outline.replace('[title]', title)
     new_page = new_page.replace('[text]', story[page_num])
 
