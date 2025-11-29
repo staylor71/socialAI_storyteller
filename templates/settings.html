@@ -49,20 +49,43 @@ Retrieved 2025-11-22, License - CC BY-SA 4.0
     <body>
 
         <!-- Site navigation menu -->
-        <ul class="navbar">
-            <a href="settings">⚙Settings⚙</a>
-            <a href="links">🔗Links🔗</a>
-        </ul>
-
-        <h1>Storyteller</h1>
+        <h1>Settings</h1>
 
         <b>
-            Hello! <br> Would you like me to tell you a story?
+            <br>Reading Level:
         </b>
+        <select class="button" name="level">
+            <option class="button">Kindergarden</option>
+            <option class="button">1st Grade</option>
+            <option class="button">2nd Grade</option>
+            <option class="button">3rd Grade</option>
+            <option class="button">4th Grade</option>
+            <option class="button">5th Grade</option>
+        </select>
+
+        <b>
+            <br>Rating:
+        </b>
+        <select class="button" name="rating">
+            <option class="button">G</option>
+            <option class="button">PG</option>
+            <option class="button">PG-13</option>
+            <option class="button">R</option>
+        </select>
+
+        <b>
+            <br>Story Length:
+        </b>
+        <select class="button" name="length">
+            <option class="button">Short</option>
+            <option class="button">Medium</option>
+            <option class="button">Long</option>
+        </select>
+        
 
         <!-- GENERATE STORY -->
-        <form action="/tell-story/">
-            <input type="submit" class="button" value="Talk" />
+        <form action="/" m>
+            <input type="submit" class="button" value="Cancel" />
         </form>
         
     </body>

@@ -224,6 +224,9 @@ def edit_story_html(page_num):
     if page_num < len(story)-1:
         outline = outline.replace("<!--next", "")
         outline = outline.replace("next-->", "")
+    else:
+        outline = outline.replace("<!--home", "")
+        outline = outline.replace("home-->", "")
 
     if page_num > 1:
         outline = outline.replace("<!--prev", "")
