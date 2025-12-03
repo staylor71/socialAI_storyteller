@@ -12,6 +12,17 @@ with open("key.json", 'r') as file:
     client = OpenAI(api_key=data["api_key"])
 
 
+word_count_to_semantics = {
+    100 : "Short",
+    300 : "Medium",
+    700 : "Long"
+}
+
+semantics_to_word_count = {
+    "Short" : 100,
+    "Medium" : 300,
+    "Long" : 700
+}
 
 
 ###################################################################
@@ -238,3 +249,43 @@ def edit_story_html(page_num):
     with open('templates/story.html', 'w+') as file:
         file.truncate(0)
         file.write(new_page)
+
+
+def open_settings_html():
+    with open("parental_controls.json", "r+") as file:
+        data = json.load(file)
+
+    negative_topics = data['topics_to_avoid']
+    rating = data['rating']
+    length = data['word_count']
+    level = data['reading_level']
+
+    length = word_count_to_semantics[length]
+
+    with open("templates/settings_template.html", 'r+') as file:
+        html = file.read()
+
+    html = html.replace('value=""', f'value="{negative_topics}"')
+    html = html.replace('placeholder=""', f'placeholder="{negative_topics}"')
+    
+    html = html.replace(f'>{rating}<', f' selected>{rating}<')
+    html = html.replace(f'>{length}<', f' selected>{length}<')
+    html = html.replace(f'>{level}<', f' selected>{level}<')
+
+    with open("templates/settings.html", 'w+') as file:
+        file.truncate(0)
+        file.write(html)
+
+
+def edit_parental_settings(topics, level, rating, length):
+    print(length)
+    data = {
+        "topics_to_avoid" : topics,
+        "rating" : rating,
+        "word_count" : semantics_to_word_count[length],
+        "reading_level" : level
+    }
+    
+    with open("parental_controls.json", 'w+') as file:
+        file.truncate(0)
+        file.write(json.dumps(data, indent=4))
