@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from helpers import edit_story_html, write_story, interrupt_story
 app = Flask(__name__)
 
@@ -11,8 +11,15 @@ PAGE_NUM = 1
 #                                                                 #
 ###################################################################
 
-@app.route('/')
+@app.route('/', methods = ["GET", "POST"])
 def home():
+    if request.method == "POST":
+        level = request.form.get("level")
+        rating = request.form.get("rating")
+        length = request.files.get("length")
+
+        
+
     return render_template('home.html')
 
 @app.route('/tell-story/')

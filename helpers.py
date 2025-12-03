@@ -4,7 +4,7 @@ tts = pyttsx3.init()
 from openai import OpenAI
 
 # Project path
-PATH = "project/socialAI_storyteller/"
+#PATH = "project/socialAI_storyteller/"
 
 # Get API key and client
 with open("key.json", 'r') as file:
@@ -119,7 +119,7 @@ def read_story(story, convo):
     title_end = story[title_start:].find("**")
     title = story[title_start:title_end]
 
-    with open(PATH+"Stories/"+title+".txt", 'w+') as file:
+    with open("Stories/"+title+".txt", 'w+') as file:
         file.write(story[title_end:])
 
 
