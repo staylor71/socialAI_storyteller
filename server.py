@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 
 PAGE_NUM = 1
+PROMPT = "Tell me a story"
 
 ###################################################################
 #                                                                 #
@@ -25,29 +26,48 @@ def home():
     return render_template('home.html')
 
 # A decorator used to tell the application
-# which URL is associated function
-@app.route('/', methods =["GET", "POST"])
-def gfg():
+# # which URL is associated function
+# @app.route('/', methods =["GET", "POST"])
+# def gfg():
+#     if request.method == "POST":
+#        # getting input with name = fname in HTML form
+#        user_text_input = request.form.get("userinput")
+#     #    return user_text_input # didnt like having 2 return statements (why was this in the example)
+#     return render_template("home.html")
+
+
+@app.route('/generating/', methods=["GET", "POST"])
+def generate_prompt():
+    global PROMPT
+
     if request.method == "POST":
        # getting input with name = fname in HTML form
        user_text_input = request.form.get("userinput")
-    #    return user_text_input # didnt like having 2 return statements (why was this in the example)
-    return render_template("home.html")
+    else:
+        user_text_input = "Tell me a story"
 
+    PROMPT = user_text_input
+
+    return render_template('waiting.html')
+
+# app.route('/waiting/')
+# def wait(context=""):
+#     print("[INFO] generating content")
+#     return tell_story(context)
+@app.route('/write')
+def write():
+    global PROMPT
+    print("[INFO] writing story")
+    write_story(PROMPT)
+    return "doneso!"
 
 @app.route('/tell-story/')
 def tell_story():
-    global PAGE_NUM
-
-
+    global PAGE_NUM, PROMPT
 
     print ('[INFO] Listening...')
 
-    #TODO add audio listener
-    try: prompt = ""# user_text_input
-    except : prompt = "Tell me a story"
-
-    write_story(prompt)
+    # write_story(PROMPT)
 
     PAGE_NUM = 1
 

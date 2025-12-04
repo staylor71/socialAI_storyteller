@@ -22,12 +22,12 @@ Retrieved 2025-11-22, License - CC BY-SA 4.0
         background-color: #d9be67 
     }
     ul.navbar {
-        font-size: 32px;
+        font-size: 16px;
         color: rgb(79, 6, 79);
         position: absolute;
-        top: 1em;
+        top: 2em;
         right: 1em; 
-        width: 5em; 
+        width: 10em; 
     }
     .button {
         background-color: #04AA6D;
@@ -43,29 +43,47 @@ Retrieved 2025-11-22, License - CC BY-SA 4.0
         cursor: pointer;
         border-radius: 12px;
     }
+    .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -56px 0 0 -56px;
+    }
+    .loader:after {
+    content: " ";
+    display: block;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 1px solid;
+    border-color: #0aa13a transparent #47a90e transparent;
+    animation: ring 1.2s linear infinite;
+    }
+
+    @keyframes ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
     </style>
+    
 </head>
 
 <!-- body start -->
     <body>
 
         <!-- Site navigation menu -->
-        <ul class="navbar">
-            <a href="settings">⚙</a>
-            <!-- <a href="links">🔗Links🔗</a> -->
-        </ul>
 
-        <h1>Storyteller</h1>
-
-        <b>
-            Hello! <br> Would you like me to tell you a story?
-        </b>
-
-        <!-- GENERATE STORY -->
-        <form action="/generating/" method="post">
-            <label for="userinput">What do you want a story about?</label>
-            <input type="text" id="userinput" name="userinput"><br><br>
-            <input type="submit" class="button" value="Talk" />
-        </form>
+        <h1>Generating Story...</h1>
+        <div class="loader"></div>
         
     </body>
+    <script>
+        function navigate() {
+            window.location.href = '/tell-story';  // Redirects user to the /map route when 'create_map' is finished
+        }
+        fetch('/write').then(navigate); // Performing 'create_map' and then calls navigate() function, declared above
+    </script>
