@@ -14,6 +14,8 @@ PROMPT = "Tell me a story"
 
 @app.route('/', methods = ["GET", "POST"])
 def home():
+    print("[RENDERER] home page rendered")
+
     if request.method == "POST":
         topics = request.form.get("negative_topics")
         level = request.form.get("level")
@@ -25,19 +27,11 @@ def home():
 
     return render_template('home.html')
 
-# A decorator used to tell the application
-# # which URL is associated function
-# @app.route('/', methods =["GET", "POST"])
-# def gfg():
-#     if request.method == "POST":
-#        # getting input with name = fname in HTML form
-#        user_text_input = request.form.get("userinput")
-#     #    return user_text_input # didnt like having 2 return statements (why was this in the example)
-#     return render_template("home.html")
-
 
 @app.route('/generating/', methods=["GET", "POST"])
 def generate_prompt():
+    print("[RENDERER] waiting page rendered")
+
     global PROMPT
 
     if request.method == "POST":
@@ -50,24 +44,23 @@ def generate_prompt():
 
     return render_template('waiting.html')
 
-# app.route('/waiting/')
-# def wait(context=""):
-#     print("[INFO] generating content")
-#     return tell_story(context)
+
 @app.route('/write')
 def write():
-    global PROMPT
     print("[INFO] writing story")
+    
+    global PROMPT    
+
     write_story(PROMPT)
+
     return "doneso!"
+
 
 @app.route('/tell-story/')
 def tell_story():
-    global PAGE_NUM, PROMPT
+    print("[RENDERER] story page 1 rendered")
 
-    print ('[INFO] Listening...')
-
-    # write_story(PROMPT)
+    global PAGE_NUM
 
     PAGE_NUM = 1
 
@@ -84,7 +77,7 @@ def tell_story():
 
 @app.route('/next/')
 def next():
-    print ('[INFO] next page')
+    print ('[RENDERER] next page')
     global PAGE_NUM
 
     PAGE_NUM = PAGE_NUM + 1
@@ -96,7 +89,7 @@ def next():
 
 @app.route('/prev/')
 def prev():
-    print ('[INFO] prev page')
+    print ('[RENDERER] prev page')
     global PAGE_NUM
 
     PAGE_NUM = PAGE_NUM - 1

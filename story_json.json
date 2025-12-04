@@ -6,14 +6,16 @@
         },
         {
             "role": "user",
-            "content": "cheese\nWrite it as a 100-word G-rated kids bedtime story with a happy ending for a Kindergarden reading level. Avoid horses, violence, guns, sex, everything. Include a title in bold."
+            "content": "cheddar\nWrite it as a 100-word G-rated kids bedtime story with a happy ending for a Kindergarden reading level. Avoid horses, violence, guns, sex, everything. Include a title in bold."
         }
     ],
-    "title": "The Cheese Adventure",
+    "title": "Cheddar the Cheese Mouse",
     "pages": [
-        "**The Cheese Adventure**",
-        "Once upon a time, in a colorful village, there lived a little mouse named Max. Max loved cheese more than anything! One sunny day, he found a big, shiny cheese wheel in the park. \u201cWow!\u201d squeaked Max, his eyes sparkling.",
-        "Max invited his friends: Bella the bunny and Sammy the squirrel. They all worked together to roll the cheese home. They sang funny songs and laughed as they pushed the cheese along.",
-        "When they reached Max\u2019s cozy house, they shared the cheese with everyone in the village. Everyone cheered and danced! Max smiled, happy to have friends to share with. The end!"
+        "**Cheddar the Cheese Mouse**",
+        "Once upon a time, in a cozy little house, lived a happy mouse named Cheddar. Cheddar loved cheese more than anything! One sunny day, he found a big, round piece of cheese in the kitchen. \"Yum!\" he squeaked with joy.",
+        "But Cheddar noticed his friends, the hungry ants, looked sad. \"What\u2019s wrong?\" he asked. They needed food too! ",
+        "Cheddar had an idea. He shared his cheese with the ants, and they all danced around happily. ",
+        "From that day on, Cheddar and the ants had cheese picnics every week. They laughed and played, knowing sharing made everyone happy. ",
+        "And they lived happily ever after!"
     ]
 }
