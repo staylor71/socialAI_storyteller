@@ -14,7 +14,7 @@ tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
 # ❗ XTTS supports both, but many models allow only one of the `speaker` and
 # `speaker_wav` arguments
 
-def tts_to_file(txt:str):
+def tts_to_file(txt:str, fname="output.wav"):
     print("starting")
 
     # TTS to a file, use a preset speaker
@@ -22,7 +22,7 @@ def tts_to_file(txt:str):
     text=txt,
     speaker="Craig Gutsy",
     language="en",
-    file_path="output.wav"
+    file_path=fname
     )
 
     print("done")

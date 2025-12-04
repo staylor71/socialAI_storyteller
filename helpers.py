@@ -105,6 +105,7 @@ def interrupt_story(user_input, page_num):
 
     #TODO make it say this in separate voice
     print(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
+    tts_to_file(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
     
     __save_story__(convo, pages[:page_num+1])
 
@@ -200,8 +201,17 @@ def edit_story_html(page_num):
         outline = outline.replace("<!--prev", "")
         outline = outline.replace("prev-->", "")
 
+    # update title and text
     new_page = outline.replace('[title]', title)
     new_page = new_page.replace('[text]', story[page_num])
+
+    # TODO: make it read the title exactly once at the start of the story or after changing course
+    if page_num == 0:
+        tts_to_file(title, fname="title.wav")
+
+    # TTS to save text as .wav file
+    tts_to_file(story[page_num])
+
 
     with open('templates/story.html', 'wb') as file:
         file.truncate(0)
