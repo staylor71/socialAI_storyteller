@@ -1,7 +1,8 @@
 import json
-import pyttsx3
-tts = pyttsx3.init()
+# import pyttsx3
+# tts = pyttsx3.init()
 from openai import OpenAI
+from coqui_testing import *
 
 # Project path
 PATH = "project/socialAI_storyteller/"
@@ -130,11 +131,10 @@ def read_story(story, convo):
 
         # Output the current page
         # TODO make it say this as the story
-        
-        print(page)
-        tts.say(page)
-        tts.runAndWait()
-        tts.stop()
+        # 1 - generate and save .wav file from text
+        tts_to_file(page)
+        # 2 - play .wav file
+
 
         # Ask for input or to continue
         user_input = input("Press ENTER to continue")
@@ -152,6 +152,8 @@ def read_story(story, convo):
 
             #TODO make it say this in separate voice
             print(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
+            tts_to_file(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
+
             
 
             # Get GPT ressponse
@@ -172,7 +174,9 @@ def read_story(story, convo):
 def generate_prompt(user_input):
 
     # Grab parental settings
-    with open("parental_controls.json", 'r') as file:
+    # with open(f"{PATH}parental_controls.json", 'r') as file:
+    with open(f"parental_controls.json", 'r') as file:
+
         data = json.load(file)
         topics_to_avoid = data['topics_to_avoid']
         rating = data["rating"]
