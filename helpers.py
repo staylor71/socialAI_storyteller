@@ -5,7 +5,7 @@ from openai import OpenAI
 from coqui_testing import *
 
 # Project path
-PATH = "project/socialAI_storyteller/"
+#PATH = "project/socialAI_storyteller/"
 
 # Get API key and client
 with open("key.json", 'r') as file:
@@ -13,6 +13,17 @@ with open("key.json", 'r') as file:
     client = OpenAI(api_key=data["api_key"])
 
 
+word_count_to_semantics = {
+    100 : "Short",
+    300 : "Medium",
+    700 : "Long"
+}
+
+semantics_to_word_count = {
+    "Short" : 100,
+    "Medium" : 300,
+    "Long" : 700
+}
 
 
 ###################################################################
@@ -27,7 +38,7 @@ persona = "You are a friendly, nurturing bedtime storyteller for kids aged 5-8 y
 def write_story(prompt):
 
     # Edit user prompt to be kid friendly and such
-    clarified_prompt = generate_prompt(prompt)
+    clarified_prompt = __generate_prompt__(prompt)
 
     # Log the current conversation
     prev_conversation = [
@@ -37,14 +48,14 @@ def write_story(prompt):
 
     print("[INFO] awaiting story!")
 
-    save_story(prev_conversation)
+    __save_story__(prev_conversation)
 
 
-def save_story(convo, prev_story=[]):
+def __save_story__(convo, prev_story=[]):
     # Generate a response
-    story = magic_box(convo, tokens=1200)
+    story = __magic_box__(convo, tokens=1200)
 
-    story = str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "-")
+    story = str(story)#str(story).replace("\u201c", "\"").replace("\u2019", "'").replace("\u201d", "\"").replace("\u2014", "-")
 
     print("[INFO] story made!")
 
@@ -55,7 +66,11 @@ def save_story(convo, prev_story=[]):
         title_end = story[title_start:].find("**")+2
         title = story[title_start:title_end]
 
-        pages = story.split('\n\n')
+        if story.count('\n\n') > 1:
+
+            pages = story.split('\n\n')
+        else:
+            pages = story.split('.')
     else:
         print("'\033[91m'[ERROR] story made improperly'\033[0m'")
         title = ""
@@ -91,10 +106,10 @@ def interrupt_story(user_input, page_num):
     #TODO make it say this in separate voice
     print(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
     
-    save_story(convo, pages[:page_num+1])
+    __save_story__(convo, pages[:page_num+1])
 
 
-def magic_box(convo, temp=0.7, tokens=1200, top=0.9, frequency=0, presence=0):
+def __magic_box__(convo, temp=0.7, tokens=1200, top=0.9, frequency=0, presence=0):
         
     # Create GPT response
     GeneratedResponse = client.chat.completions.create(
@@ -111,57 +126,6 @@ def magic_box(convo, temp=0.7, tokens=1200, top=0.9, frequency=0, presence=0):
 
     AgentResponse = GeneratedResponse.choices[0].message.content
     return AgentResponse
-
-
-def read_story(story, convo):
-
-    # Save the story to a file titled by name
-    title_start = story.find("**")+2
-    title_end = story[title_start:].find("**")
-    title = story[title_start:title_end]
-
-    with open(PATH+"Stories/"+title+".txt", 'w+') as file:
-        file.write(story[title_end:])
-
-
-    # Split content into pages based on returns
-    pages = story.split('\n\n')
-
-    for i, page in enumerate(pages):
-
-        # Output the current page
-        # TODO make it say this as the story
-        # 1 - generate and save .wav file from text
-        tts_to_file(page)
-        # 2 - play .wav file
-
-
-        # Ask for input or to continue
-        user_input = input("Press ENTER to continue")
-
-        # Check if input given
-        if user_input != None and not user_input.isspace() and len(user_input) > 2:
-
-            # Edit prompt to adhere to guidelines
-            edited_prompt = interrupt_prompt(user_input)
-            
-            # Set up the conversation so far
-            convo.append({"role" : "assistant", "content" : "\n\n".join(pages[:i+1])})
-            convo.append({"role" : "user", "content" : edited_prompt})
-
-
-            #TODO make it say this in separate voice
-            print(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
-            tts_to_file(f'Alright, I hear you and will edit the story with your request of "{user_input}".')
-
-            
-
-            # Get GPT ressponse
-            response = magic_box(convo)
-
-            # Read the reply recurrsively
-            read_story(response, convo)
-            break
         
       
 ###################################################################
@@ -171,7 +135,7 @@ def read_story(story, convo):
 ###################################################################
 
 
-def generate_prompt(user_input):
+def __generate_prompt__(user_input):
 
     # Grab parental settings
     # with open(f"{PATH}parental_controls.json", 'r') as file:
@@ -184,7 +148,7 @@ def generate_prompt(user_input):
         reading_level = data['reading_level']
 
     # Create the guidelines for the AI
-    guidelines = f"Write it as a {word_count}-word {rating}-rated kids bedtime story with a happy ending for a {reading_level} reading level. Avoid {topics_to_avoid}."
+    guidelines = f"Write it as a {word_count}-word {rating}-rated kids bedtime story with a happy ending for a {reading_level} reading level. Avoid {topics_to_avoid}. Include a title in bold."
 
     # Add guidelines to the prompt
     full_prompt = f"{user_input}\n{guidelines}"
@@ -239,6 +203,46 @@ def edit_story_html(page_num):
     new_page = outline.replace('[title]', title)
     new_page = new_page.replace('[text]', story[page_num])
 
-    with open('templates/story.html', 'w+') as file:
+    with open('templates/story.html', 'wb') as file:
         file.truncate(0)
-        file.write(new_page)
+        file.write(new_page.encode('ascii', 'xmlcharrefreplace'))
+
+
+def open_settings_html():
+    with open("parental_controls.json", "r+") as file:
+        data = json.load(file)
+
+    negative_topics = data['topics_to_avoid']
+    rating = data['rating']
+    length = data['word_count']
+    level = data['reading_level']
+
+    length = word_count_to_semantics[length]
+
+    with open("templates/settings_template.html", 'r+') as file:
+        html = file.read()
+
+    html = html.replace('value=""', f'value="{negative_topics}"')
+    html = html.replace('placeholder=""', f'placeholder="{negative_topics}"')
+    
+    html = html.replace(f'>{rating}<', f' selected>{rating}<')
+    html = html.replace(f'>{length}<', f' selected>{length}<')
+    html = html.replace(f'>{level}<', f' selected>{level}<')
+
+    with open("templates/settings.html", 'w+') as file:
+        file.truncate(0)
+        file.write(html)
+
+
+def edit_parental_settings(topics, level, rating, length):
+    print(length)
+    data = {
+        "topics_to_avoid" : topics,
+        "rating" : rating,
+        "word_count" : semantics_to_word_count[length],
+        "reading_level" : level
+    }
+    
+    with open("parental_controls.json", 'w+') as file:
+        file.truncate(0)
+        file.write(json.dumps(data, indent=4))

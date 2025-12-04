@@ -28,6 +28,8 @@
         color: white;
         padding: 15px 32px;
         text-align: center;
+        position: absolute;
+        bottom: 2em;
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
@@ -36,19 +38,10 @@
         border-radius: 12px;
     }
     .next {
-        position: absolute;
-        bottom: 2em;
         right: 1em;
     }
     .prev {
-        position: absolute;
-        bottom: 2em;
         left: 1em;
-    }
-    .talk {
-        position: absolute;
-        text-align: center;
-        bottom: 2em;
     }
     </style>
 </head>
@@ -56,16 +49,15 @@
     <body>
 
         <!-- Site navigation menu -->
-        <ul class="navbar">
-            <a href="settings.html">⚙Settings⚙</a>
-            <a href="links.html">🔗Links🔗</a>
-        </ul>
+        <!-- <ul class="navbar">
+            <a href="settings">Settings</a>
+            <a href="links">Links</a>
+        </ul> -->
 
-        <h1>Storyteller</h1>
-        <h2>Luna and the Magical Paintbrush</h2>
+        <h1>Cheddar the Cheese Mouse</h1>
 
         <b>
-            Luna was so excited! She thought it might be a magical paintbrush. "I can't wait to try it out!" she said, her eyes sparkling with joy. She ran back to her tree and dipped the brush into her favorite colors�sunny yellow, sky blue, and grass green.
+            Cheddar had an idea. He shared his cheese with the ants, and they all danced around happily. 
         </b>
 
         
@@ -73,6 +65,12 @@
             <input type="submit" class="button next" value="Next" />
         </form>
         
+
+        <!--home
+        <form action="/">
+            <input type="submit" class="button next" value="Home" />
+        </form>
+        home-->
 
         <form action="/talk/">
             <input type="submit" class="button talk" value="Talk" />
