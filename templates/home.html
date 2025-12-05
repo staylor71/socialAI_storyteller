@@ -51,21 +51,41 @@ Retrieved 2025-11-22, License - CC BY-SA 4.0
 
         <!-- Site navigation menu -->
         <ul class="navbar">
-            <a href="settings">⚙</a>
+            <a href="settings" style="text-decoration:none;">⚙</a>
             <!-- <a href="links">🔗Links🔗</a> -->
         </ul>
 
         <h1>Storyteller</h1>
 
         <b>
-            Hello! <br> Would you like me to tell you a story?
+            Hello! <br> Would you like me to tell you a story? <br>
         </b>
 
-        <!-- GENERATE STORY -->
-        <form action="/generating/" method="post">
-            <label for="userinput">What do you want a story about?</label>
-            <input type="text" id="userinput" name="userinput"><br><br>
-            <input type="submit" class="button" value="Talk" />
-        </form>
+        
+        <button id="record-button" class="button">Start Recording</button>
+        <script>
+            function toggleRecording() {
+                var button = document.getElementById("record-button");
+                var newState = button.innerText === "Start Recording" ? "Stop Recording" : "Start Recording";
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/toggle_recording", true);
+                xhr.send();
+
+                if(button.innerText === "Stop Recording") {
+                    window.location.href = "/generating"
+                }
+
+                button.innerText = newState;
+                button.style.backgroundColor = newState === "Stop Recording" ? "red" : "#04AA6D";
+                button.style.color = newState === "Stop Recording" ? "white" : "";
+
+            }
+
+            // ✅ Add click event listeners
+            document.getElementById("record-button").addEventListener("click", toggleRecording);
+        </script>
+
+        </body>
         
     </body>

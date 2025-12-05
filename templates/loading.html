@@ -1,0 +1,89 @@
+<!--
+Source - https://stackoverflow.com/a
+Posted by Chanrithisak Phok, modified by community. See post 'Timeline' for change history
+Retrieved 2025-11-22, License - CC BY-SA 4.0
+-->
+
+<!doctype html>
+
+
+
+<head><title>Home Page</title> 
+    <meta charset=utf-8> 
+    <!-- <link rel="stylesheet" href="mystyle.css"> -->
+    <style type="text/css">
+    body {
+        font-size: 2em;
+        padding-left: 5em;
+        padding-right: 5em;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(79, 6, 79);
+        background-color: #d9be67 
+    }
+    ul.navbar {
+        font-size: 16px;
+        color: rgb(79, 6, 79);
+        position: absolute;
+        top: 2em;
+        right: 1em; 
+        width: 10em; 
+    }
+    .button {
+        background-color: #04AA6D;
+        border-width: 2px;
+        border-color: white;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+    }
+    .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -56px 0 0 -56px;
+    }
+    .loader:after {
+    content: " ";
+    display: block;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 1px solid;
+    border-color: #0aa13a transparent #47a90e transparent;
+    animation: ring 1.2s linear infinite;
+    }
+
+    @keyframes ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    </style>
+    
+</head>
+
+<!-- body start -->
+    <body>
+
+        <!-- Site navigation menu -->
+
+        <h1>Editing The Story...</h1>
+        <div class="loader"></div>
+        
+    </body>
+    <script>
+        function navigate() {
+            window.location.href = '/next';  // Redirects user to the /map route when 'create_map' is finished
+        }
+        fetch('/edit').then(navigate); // Performing 'create_map' and then calls navigate() function, declared above
+    </script>

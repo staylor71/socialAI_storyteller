@@ -66,11 +66,13 @@ def __save_story__(convo, prev_story=[]):
         title_end = story[title_start:].find("**")+2
         title = story[title_start:title_end]
 
+        story = story.replace(f'**{title}**\n\n', "")
+
         if story.count('\n\n') > 1:
 
             pages = story.split('\n\n')
         else:
-            pages = story.split('.')
+            pages = story.replace('\n\n', '.').replace('.', '.<>').split('<>')
     else:
         print("'\033[91m'[ERROR] story made improperly'\033[0m'")
         title = ""

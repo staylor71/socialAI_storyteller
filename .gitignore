@@ -2,3 +2,4 @@
 .venv/*
 key.json
 Stories/*
+__pycache__/*
